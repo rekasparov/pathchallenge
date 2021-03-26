@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PATH.WebApp", "PATH.WebApp\PATH.WebApp.csproj", "{BAE99557-853F-41A9-AAF8-110FD62DBF2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.Entity", "PATH.Entity\PATH.Entity.csproj", "{E3F4F31E-DDA5-48B6-A6C4-3F7A2FFC90FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PATH.Entity", "PATH.Entity\PATH.Entity.csproj", "{E3F4F31E-DDA5-48B6-A6C4-3F7A2FFC90FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.DataTransferObject", "PATH.DataTransferObject\PATH.DataTransferObject.csproj", "{37F337C2-11A3-40E1-BD97-3D5C0DD83BDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PATH.DataTransferObject", "PATH.DataTransferObject\PATH.DataTransferObject.csproj", "{37F337C2-11A3-40E1-BD97-3D5C0DD83BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.Extension", "PATH.Extension\PATH.Extension.csproj", "{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PATH.Extension", "PATH.Extension\PATH.Extension.csproj", "{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.Repository", "PATH.Repository\PATH.Repository.csproj", "{6D4027B2-7C33-4B7D-951C-052487A6FE41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PATH.Repository", "PATH.Repository\PATH.Repository.csproj", "{6D4027B2-7C33-4B7D-951C-052487A6FE41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.DataAccessLayer", "PATH.DataAccessLayer\PATH.DataAccessLayer.csproj", "{5EF6A228-5E05-45A4-8B75-09CF89B35464}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EF6A228-5E05-45A4-8B75-09CF89B35464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EF6A228-5E05-45A4-8B75-09CF89B35464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EF6A228-5E05-45A4-8B75-09CF89B35464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EF6A228-5E05-45A4-8B75-09CF89B35464}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
