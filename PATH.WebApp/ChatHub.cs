@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using PATH.BusinessLayer.Abstract;
+using PATH.DataTransferObject;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
@@ -73,6 +75,13 @@ namespace PATH.WebApp
 
         private static Dictionary<string, string> memberList = new Dictionary<string, string>();
 
+        private IChatRoomLogBl chatRoomLogBl;
+
+        public ChatHub(IChatRoomLogBl chatRoomLogBl)
+        {
+            this.chatRoomLogBl = chatRoomLogBl;
+        }
+
         public override Task OnConnectedAsync()
         {
             return base.OnConnectedAsync();
@@ -95,6 +104,13 @@ namespace PATH.WebApp
 
             memberList.Add(connectionId, username);
 
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                LogType = (int)LogTypeEnum.JOIN,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss")
+            });
+
             return Clients.Client(connectionId).SendAsync("LoginRequestSuccessfull", username);
         }
 
@@ -111,6 +127,14 @@ namespace PATH.WebApp
             KeyValuePair<int, string> chatRoom = getChatRoomByChatRoomName(chatRoomName);
 
             int chatRoomId = chatRoom.Key;
+
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                ChatRoomName = chatRoomName,
+                LogType = (int)LogTypeEnum.JOIN,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss")
+            });
 
             return joinToChatRoom(connectionId, username, chatRoomId);
         }
@@ -134,6 +158,15 @@ namespace PATH.WebApp
             string messageDate = DateTime.Now.ToString("HH:mm:ss");
 
             addMessageToRedis(chatRoomName, username, messageDate, message);
+
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                ChatRoomName = chatRoomName,
+                LogType = (int)LogTypeEnum.MESSAGE,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss"),
+                Message = message
+            });
 
             return Clients.Clients(membersOfChatRoom).SendAsync("HasNewMessageOnChatRoom", username, chatRoomName, messageDate, message);
         }
@@ -276,6 +309,14 @@ namespace PATH.WebApp
 
                     string message = $"{username} has just left from chat room";
 
+                    WriteLogToDb(new ChatRoomLogDto()
+                    {
+                        ChatRoomName = chatRoomName,
+                        LogType = (int)LogTypeEnum.LEAVE,
+                        Username = username,
+                        MessageDate = DateTime.Now.ToString("HH:mm:ss")
+                    });
+
                     Clients.Clients(membersOfChatRoom).SendAsync("HasDisconnection", "Server", chatRoomName, messageDate, message);
                 });
             }
@@ -326,6 +367,15 @@ namespace PATH.WebApp
             string jsonChatRoomHistory = JsonConvert.SerializeObject(messageModelList);
 
             return jsonChatRoomHistory;
+        }
+
+        private void WriteLogToDb(ChatRoomLogDto dto)
+        {
+            Task.Run(async () =>
+            {
+                chatRoomLogBl.AddNew(dto);
+                return await chatRoomLogBl.SaveChanges();
+            });
         }
     }
 }
