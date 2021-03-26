@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.DataTransferObject", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.Extension", "PATH.Extension\PATH.Extension.csproj", "{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PATH.Repository", "PATH.Repository\PATH.Repository.csproj", "{6D4027B2-7C33-4B7D-951C-052487A6FE41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6B41DA5-AAFC-4EC7-8039-3D3E76C2AD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D4027B2-7C33-4B7D-951C-052487A6FE41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
