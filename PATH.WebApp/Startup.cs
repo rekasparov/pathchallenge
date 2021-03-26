@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PATH.BusinessLayer.Abstract;
+using PATH.BusinessLayer.Concrete;
+using PATH.UnitOfWork.Abstract;
+using PATH.UnitOfWork.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +26,9 @@ namespace PATH.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IChatRoomLogBl, ChatRoomLogBl>();
+            services.AddSingleton<IBaseUnitOfWork, BaseUnitOfWork>();
+
             services.AddRazorPages();
             services.AddSignalR();
         }

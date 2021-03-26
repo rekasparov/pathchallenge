@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using PATH.BusinessLayer.Abstract;
+using PATH.DataTransferObject;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
@@ -72,6 +74,13 @@ namespace PATH.WebApp
         private static Dictionary<int, Dictionary<string, string>> chatRoomMemberList = new Dictionary<int, Dictionary<string, string>>();
 
         private static Dictionary<string, string> memberList = new Dictionary<string, string>();
+
+        private IChatRoomLogBl chatRoomLogBl;
+
+        public ChatHub(IChatRoomLogBl chatRoomLogBl)
+        {
+            this.chatRoomLogBl = chatRoomLogBl;
+        }
 
         public override Task OnConnectedAsync()
         {
@@ -326,6 +335,12 @@ namespace PATH.WebApp
             string jsonChatRoomHistory = JsonConvert.SerializeObject(messageModelList);
 
             return jsonChatRoomHistory;
+        }
+
+        private async Task<int> WriteLogToDb(ChatRoomLogDto dto)
+        {
+            chatRoomLogBl.AddNew(dto);
+            return await chatRoomLogBl.SaveChanges();
         }
     }
 }
