@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PATH.DataTransferObject\PATH.DataTransferObject.csproj" />
+    <ProjectReference Include="..\PATH.Extension\PATH.Extension.csproj" />
+    <ProjectReference Include="..\PATH.UnitOfWork\PATH.UnitOfWork.csproj" />
+  </ItemGroup>
+
+</Project>
