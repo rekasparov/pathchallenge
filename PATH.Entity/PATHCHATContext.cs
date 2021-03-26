@@ -36,19 +36,13 @@ namespace PATH.Entity
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.ChatRoomName)
-                    .IsRequired()
-                    .HasMaxLength(15);
+                entity.Property(e => e.ChatRoomName).HasMaxLength(15);
 
                 entity.Property(e => e.Message).HasMaxLength(250);
 
-                entity.Property(e => e.MessageDate)
-                    .IsRequired()
-                    .HasMaxLength(20);
+                entity.Property(e => e.MessageDate).HasMaxLength(20);
 
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(20);
+                entity.Property(e => e.Username).HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);
