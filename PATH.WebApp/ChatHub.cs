@@ -104,6 +104,13 @@ namespace PATH.WebApp
 
             memberList.Add(connectionId, username);
 
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                LogType = (int)LogTypeEnum.JOIN,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss")
+            });
+
             return Clients.Client(connectionId).SendAsync("LoginRequestSuccessfull", username);
         }
 
@@ -120,6 +127,14 @@ namespace PATH.WebApp
             KeyValuePair<int, string> chatRoom = getChatRoomByChatRoomName(chatRoomName);
 
             int chatRoomId = chatRoom.Key;
+
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                ChatRoomName = chatRoomName,
+                LogType = (int)LogTypeEnum.JOIN,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss")
+            });
 
             return joinToChatRoom(connectionId, username, chatRoomId);
         }
@@ -143,6 +158,15 @@ namespace PATH.WebApp
             string messageDate = DateTime.Now.ToString("HH:mm:ss");
 
             addMessageToRedis(chatRoomName, username, messageDate, message);
+
+            WriteLogToDb(new ChatRoomLogDto()
+            {
+                ChatRoomName = chatRoomName,
+                LogType = (int)LogTypeEnum.MESSAGE,
+                Username = username,
+                MessageDate = DateTime.Now.ToString("HH:mm:ss"),
+                Message = message
+            });
 
             return Clients.Clients(membersOfChatRoom).SendAsync("HasNewMessageOnChatRoom", username, chatRoomName, messageDate, message);
         }
@@ -285,6 +309,14 @@ namespace PATH.WebApp
 
                     string message = $"{username} has just left from chat room";
 
+                    WriteLogToDb(new ChatRoomLogDto()
+                    {
+                        ChatRoomName = chatRoomName,
+                        LogType = (int)LogTypeEnum.LEAVE,
+                        Username = username,
+                        MessageDate = DateTime.Now.ToString("HH:mm:ss")
+                    });
+
                     Clients.Clients(membersOfChatRoom).SendAsync("HasDisconnection", "Server", chatRoomName, messageDate, message);
                 });
             }
@@ -337,10 +369,13 @@ namespace PATH.WebApp
             return jsonChatRoomHistory;
         }
 
-        private async Task<int> WriteLogToDb(ChatRoomLogDto dto)
+        private void WriteLogToDb(ChatRoomLogDto dto)
         {
-            chatRoomLogBl.AddNew(dto);
-            return await chatRoomLogBl.SaveChanges();
+            Task.Run(async () =>
+            {
+                chatRoomLogBl.AddNew(dto);
+                return await chatRoomLogBl.SaveChanges();
+            });
         }
     }
 }
