@@ -15,9 +15,9 @@ namespace PATH.UnitOfWork.Concrete
     {
         public IChatRoomLogDal<ChatRoomLog> ChatRoomLog => new ChatRoomLogDal(dbContext);
 
-        public int SaveChanges()
+        public async Task<int> SaveChanges()
         {
-            throw new NotImplementedException();
+            return await dbContext.SaveChangesAsync();
         }
 
         public void Dispose()

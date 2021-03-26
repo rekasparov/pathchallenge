@@ -11,6 +11,6 @@ namespace PATH.UnitOfWork.Abstract
     public interface IBaseUnitOfWork : IDisposable
     {
         IChatRoomLogDal<ChatRoomLog> ChatRoomLog { get; }
-        int SaveChanges();
+        Task<int> SaveChanges();
     }
 }
