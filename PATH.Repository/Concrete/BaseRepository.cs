@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using PATH.Repository.Abstract;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,34 @@ namespace PATH.Repository.Concrete
 
         public void Delete(T entity)
         {
-            dbContext.Remove(entity).State = EntityState.Deleted;
+            using (IDbContextTransaction dbContextTransaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    dbContext.Remove(entity).State = EntityState.Deleted;
+                    dbContextTransaction.Commit();
+                }
+                catch
+                {
+                    dbContextTransaction.Rollback();
+                }
+            }
         }
 
         public void Insert(T entity)
         {
-            dbContext.Add(entity).State = EntityState.Added;
+            using (IDbContextTransaction dbContextTransaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    dbContext.Add(entity).State = EntityState.Added;
+                    dbContextTransaction.Commit();
+                }
+                catch
+                {
+                    dbContextTransaction.Rollback();
+                }
+            }
         }
 
         public IQueryable<T> Select(Expression<Func<T, bool>> predicate = null)
@@ -37,7 +60,18 @@ namespace PATH.Repository.Concrete
 
         public void Update(T entity)
         {
-            dbContext.Update(entity).State = EntityState.Modified;
+            using (IDbContextTransaction dbContextTransaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    dbContext.Update(entity).State = EntityState.Modified;
+                    dbContextTransaction.Commit();
+                }
+                catch
+                {
+                    dbContextTransaction.Rollback();
+                }
+            }
         }
     }
 }
