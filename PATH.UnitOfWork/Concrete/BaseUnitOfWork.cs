@@ -25,11 +25,14 @@ namespace PATH.UnitOfWork.Concrete
             GC.SuppressFinalize(dbContext);
         }
 
+        private static DbContext _dbContext;
         private static DbContext dbContext
         {
             get
             {
-                return new PATHCHATContext();
+                if (_dbContext == null) _dbContext = new PATHCHATContext();
+
+                return _dbContext;
             }
         }
     }
